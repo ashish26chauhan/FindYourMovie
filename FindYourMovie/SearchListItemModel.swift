@@ -15,6 +15,20 @@ import Foundation
          "Poster": "https://m.media-amazon.com/images/M/MV5BZDRiNGIzYWEtYzY3Zi00MTcwLWFkOWItZjEyYjg0OGMxMGQ5XkEyXkFqcGdeQXVyMjM4NjQxMDA@._V1_SX300.jpg"
      }
  */
+
+struct SearchListModel: Codable {
+    var search: [SearchListItemModel]
+    
+    enum RootKeys: String, CodingKey {
+        case search = "Search"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: RootKeys.self)
+        search = try container.decodeIfPresent([SearchListItemModel].self, forKey: .search) ?? []
+    }
+}
+
 struct SearchListItemModel: Codable {
     var title: String
     var year: String
